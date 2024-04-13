@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.example.productservice.mapper.ProductMapper;
 import com.example.productservice.po.Product;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @AllArgsConstructor
@@ -35,9 +34,23 @@ public class ProductController {
         return productList;
     }
 
-    @GetMapping("/addProduct/{product}")
-    public void addProduct(@PathVariable Product product){
+    @PostMapping("/addProduct")
+    public void addProduct(@RequestBody Product product) {
         productMapper.addProduct(product);
-        log.info("-------------OK   addProduct--------------------");
+        log.info("-------------OK   /addProduct--------------------");
+    }
+
+    // 删除商品信息
+    @DeleteMapping("/deleteProduct/{productId}")
+    public void deleteProduct(@PathVariable Long productId) {
+        productMapper.deleteProduct(productId);
+        log.info("-------------OK   /deleteProduct/{productId}--------------------");
+    }
+
+    // 修改商品信息
+    @PutMapping("/updateProduct")
+    public void updateProduct(@RequestBody Product product) {
+        productMapper.updateProduct(product);
+        log.info("-------------OK   /updateProduct--------------------");
     }
 }
